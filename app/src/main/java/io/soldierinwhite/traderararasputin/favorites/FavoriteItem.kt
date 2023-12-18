@@ -4,21 +4,18 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,9 +27,14 @@ import io.soldierinwhite.traderararasputin.ui.theme.Size
 
 @Composable
 fun FavoriteItem(product: Product) {
-    Row(modifier = Modifier
-        .background(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(4.dp))
-        .fillMaxWidth()) {
+    Row(
+        modifier = Modifier
+            .background(
+                color = getFavoritePriceCategoryColor(price = product.price),
+                shape = RoundedCornerShape(4.dp)
+            )
+            .fillMaxWidth()
+    ) {
         AsyncImage(
             modifier = Modifier
                 .clip(RoundedCornerShape(4.dp))
@@ -44,9 +46,11 @@ fun FavoriteItem(product: Product) {
             contentScale = ContentScale.Crop,
             placeholder = ColorPainter(MaterialTheme.colorScheme.surfaceVariant)
         )
-        Column(modifier = Modifier
-            .weight(1f)
-            .padding(8.dp), verticalArrangement = Arrangement.Center) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp), verticalArrangement = Arrangement.Center
+        ) {
             Text(
                 text = product.title,
                 style = MaterialTheme.typography.labelMedium,
@@ -69,12 +73,21 @@ fun FavoriteItem(product: Product) {
 @Composable
 fun FavoriteItem_Preview() {
     AppTheme {
-        FavoriteItem(product = Product(
-            id = "tibique",
-            title = "vocibus",
-            price = 6369,
-            currency = "SEK",
-            image = "lorem"
-        ))
+        FavoriteItem(
+            product = Product(
+                id = "tibique",
+                title = "vocibus",
+                price = 600,
+                currency = "SEK",
+                image = "loremipsum"
+            )
+        )
     }
+}
+
+@Composable
+fun getFavoritePriceCategoryColor(price: Int): Color = when (price) {
+    in (0..50) -> MaterialTheme.colorScheme.secondaryContainer
+    in (50..500) -> MaterialTheme.colorScheme.tertiaryContainer
+    else -> MaterialTheme.colorScheme.primaryContainer
 }
