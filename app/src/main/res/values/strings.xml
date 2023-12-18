@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TradeRaRaRasputin</string>
+    <string name="remove_favourite">Ta bort som favorit</string>
+    <string name="add_favourite">Lägg till som favorit</string>
+    <string name="favorites">Favorites</string>
+    <string name="explore">Explore</string>
+    <string name="settings">Settings</string>
+</resources>
